@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,8 +15,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Redirect / to /contacts
+Route::redirect('/', '/contacts')->name('dashboard');
+
+// Public route: list contacts
+Route::get('/contacts', [ContactController::class, 'index'])->name('contacts.index');
+
+// Protected routes
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::resource('contacts', ContactController::class)->except(['index']);
 });
 
-Route::resource('contacts', App\Http\Controllers\ContactController::class);
+// Perfil
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__ . '/auth.php';
