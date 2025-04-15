@@ -37,6 +37,7 @@
         </div>
 
         <div>
+            <a href="{{ route('contacts.index') }}" class="btn btn-secondary">Cancel</a>
             <button type="submit">Update Contact</button>
         </div>
     </form>

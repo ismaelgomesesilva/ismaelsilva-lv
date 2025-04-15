@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Contact;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreContactRequest;
 
 class ContactController extends Controller
 {
@@ -19,15 +20,9 @@ class ContactController extends Controller
         return view('contacts.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreContactRequest $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|min:5',
-            'contact' => 'required|digits:9',
-            'email' => 'required|email|unique:contacts,email',
-        ]);
-
-        Contact::create($validated);
+        Contact::create($request->validated());
 
         return redirect()->route('contacts.index')->with('success', 'Contact created successfully!');
     }
@@ -43,15 +38,9 @@ class ContactController extends Controller
     }
 
 
-    public function update(Request $request, Contact $contact)
+    public function update(StoreContactRequest $request, Contact $contact)
     {
-        $validated = $request->validate([
-            'name' => 'required|min:5',
-            'contact' => 'required|digits:9',
-            'email' => 'required|email|unique:contacts,email,' . $contact->id,
-        ]);
-
-        $contact->update($validated);
+        $contact->update($request->validated());
 
         return redirect()->route('contacts.index')->with('success', 'Contact updated!');
     }
