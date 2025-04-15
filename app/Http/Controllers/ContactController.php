@@ -40,6 +40,8 @@ class ContactController extends Controller
 
     public function update(UpdateContactRequest $request, Contact $contact)
     {
+        $contact->fill($request->validated());
+
         if ($contact->isDirty()) {
             $contact->update($request->validated());
 
