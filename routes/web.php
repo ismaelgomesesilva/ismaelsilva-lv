@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Redirect / to /contacts
-Route::redirect('/', '/contacts');
+Route::redirect('/', '/contacts')->name('dashboard');
 
 // Public route: list contacts
 Route::get('/contacts', [ContactController::class, 'index'])->name('contacts.index');
