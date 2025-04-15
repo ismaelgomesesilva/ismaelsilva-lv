@@ -1,4 +1,12 @@
 <div>
+    @if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+    @endif
+    <div>
+        <a href="{{ route('contacts.create') }}" class="btn btn-success">New Contact</a>
+    </div>
     <table>
         <thead>
             <tr>
