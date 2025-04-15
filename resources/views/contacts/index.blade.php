@@ -4,6 +4,12 @@
         {{ session('success') }}
     </div>
     @endif
+
+    @if(session('info'))
+    <div class="alert alert-info">
+        {{ session('info') }}
+    </div>
+    @endif
     <div>
         <a href="{{ route('contacts.create') }}" class="btn btn-success">New Contact</a>
     </div>
@@ -25,6 +31,7 @@
                 <td>{{ $contact->email }}</td>
                 <td>{{ $contact->contact }}</td>
                 <td>
+                    <a href="{{ route('contacts.show', $contact->id) }}" class="btn btn-info">View</a>
                     <a href="{{ route('contacts.edit', $contact->id) }}" class="btn btn-primary">Edit</a>
                     <form action="{{ route('contacts.destroy', $contact->id) }}" method="POST" style="display:inline;">
                         @csrf

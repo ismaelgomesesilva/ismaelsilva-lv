@@ -5,7 +5,7 @@
     </div>
     @endif
 
-    <form action="{{ route('contacts.update', $contact->id) }}" method="POST">
+    <form action="{{ route('contacts.update', $contact) }}" method="POST">
         @csrf
         @method('PUT')
 

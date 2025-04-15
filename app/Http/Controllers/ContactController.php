@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contact;
-use Illuminate\Http\Request;
 use App\Http\Requests\StoreContactRequest;
+use App\Http\Requests\UpdateContactRequest;
 
 class ContactController extends Controller
 {
@@ -29,7 +29,7 @@ class ContactController extends Controller
 
     public function show(Contact $contact)
     {
-        return view('contacts.show');
+        return view('contacts.show', compact('contact'));
     }
 
     public function edit(Contact $contact)
@@ -38,11 +38,15 @@ class ContactController extends Controller
     }
 
 
-    public function update(StoreContactRequest $request, Contact $contact)
+    public function update(UpdateContactRequest $request, Contact $contact)
     {
-        $contact->update($request->validated());
+        if ($contact->isDirty()) {
+            $contact->update($request->validated());
 
-        return redirect()->route('contacts.index')->with('success', 'Contact updated!');
+            return redirect()->route('contacts.index')->with('success', 'Contact updated!');
+        }
+
+        return redirect()->route('contacts.index')->with('info', 'No changes made to the contact.');
     }
 
     public function destroy(Contact $contact)
