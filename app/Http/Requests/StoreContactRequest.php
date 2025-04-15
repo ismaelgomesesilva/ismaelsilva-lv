@@ -24,7 +24,7 @@ class StoreContactRequest extends FormRequest
         return [
             'name' => 'required|min:5',
             'email' => 'required|email|unique:contacts,email',
-            'contact' => 'required|digits:9',
+            'contact' => 'required|digits:9|unique:contacts,contact',
         ];
     }
 }
